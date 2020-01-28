@@ -4,20 +4,20 @@ services:
   - docker
 
 before_install:
-  - docker build -t JacksonJW/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t jacksonjw/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true JacksonJW/react-test npm test
+  - docker run -e CI=true jacksonjw/react-test npm test
 
 after-success:
-  - docker build -t JacksonJW/multi-client ./client
-  - docker build -t JacksonJW/multi-server ./server
-  - docker build -t JacksonJW/multi-worker ./worker
-  - docker build -t JacksonJW/multi-nginx ./nginx
+  - docker build -t jacksonjw/multi-client ./client
+  - docker build -t jacksonjw/multi-server ./server
+  - docker build -t jacksonjw/multi-worker ./worker
+  - docker build -t jacksonjw/multi-nginx ./nginx
   # Log in to docker hub
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push JacksonJW/multi-client
-  - docker push JacksonJW/multi-server
-  - docker push JacksonJW/multi-nginx
-  - docker push JacksonJW/multi-worker
+  - docker push jacksonjw/multi-client
+  - docker push jacksonjw/multi-server
+  - docker push jacksonjw/multi-nginx
+  - docker push jacksonjw/multi-worker
