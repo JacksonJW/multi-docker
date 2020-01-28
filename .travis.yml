@@ -1,0 +1,23 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t JacksonJW/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true JacksonJW/react-test npm test
+
+after-success:
+  - docker build -t JacksonJW/multi-client ./client
+  - docker build -t JacksonJW/multi-server ./server
+  - docker build -t JacksonJW/multi-worker ./worker
+  - docker build -t JacksonJW/multi-nginx ./nginx
+  # Log in to docker hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push JacksonJW/multi-client
+  - docker push JacksonJW/multi-server
+  - docker push JacksonJW/multi-nginx
+  - docker push JacksonJW/multi-worker
