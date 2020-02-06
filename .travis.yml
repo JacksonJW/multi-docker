@@ -21,3 +21,15 @@ after-success:
   - docker push jacksonjw/multi-server
   - docker push jacksonjw/multi-nginx
   - docker push jacksonjw/multi-worker
+
+deploy:
+  - provider: elasticbeanstalk
+  - region: us-west-1
+  - app: multi-docker1
+  - env: MultiDocker1-env
+  - bucket-name: elasticbeanstalk-us-west-1-163148894670
+  - bucket-path: docker-multi
+  - on:
+      branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
