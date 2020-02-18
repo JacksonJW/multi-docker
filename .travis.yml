@@ -20,6 +20,7 @@ after-success:
   - docker push jacksonjw/multi-server
   - docker push jacksonjw/multi-nginx
   - docker push jacksonjw/multi-worker
+# AWS EBS deploy script
 # deploy:
 #   provider: elasticbeanstalk
 #   region: us-west-1
